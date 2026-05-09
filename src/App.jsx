@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 const FILTERS = ['Todas', 'Ativas', 'Concluídas']
@@ -7,6 +7,11 @@ export default function App() {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState('')
   const [filter, setFilter] = useState('Todas')
+  const [dark, setDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
+  }, [dark])
 
   function addTask() {
     const text = input.trim()
@@ -37,7 +42,12 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1 className="title">Lista de Tarefas</h1>
+      <div className="header">
+        <h1 className="title">Lista de Tarefas</h1>
+        <button className="theme-btn" onClick={() => setDark(d => !d)} title="Alternar tema">
+          {dark ? '☀️' : '🌙'}
+        </button>
+      </div>
 
       <div className="input-row">
         <input

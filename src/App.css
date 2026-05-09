@@ -1,17 +1,39 @@
 .app {
-  background: #fff;
+  background: var(--bg-card);
   border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 24px var(--shadow);
   padding: 2rem;
   margin-top: 2rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
 .title {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  color: var(--text-primary);
+}
+
+.theme-btn {
+  background: none;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  transition: border-color 0.2s, transform 0.2s;
+  line-height: 1;
+}
+
+.theme-btn:hover {
+  border-color: #6366f1;
+  transform: scale(1.1);
 }
 
 .input-row {
@@ -23,11 +45,17 @@
 .task-input {
   flex: 1;
   padding: 0.65rem 1rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  background: var(--bg-item);
+  color: var(--text-secondary);
+  transition: border-color 0.2s, background 0.3s;
+}
+
+.task-input::placeholder {
+  color: var(--text-placeholder);
 }
 
 .task-input:focus {
@@ -59,13 +87,13 @@
 .filter-btn {
   flex: 1;
   padding: 0.45rem;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--border);
   border-radius: 8px;
-  background: #fff;
+  background: var(--bg-item);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
-  color: #555;
+  color: var(--text-muted);
 }
 
 .filter-btn:hover {
@@ -90,7 +118,7 @@
 
 .empty {
   text-align: center;
-  color: #aaa;
+  color: var(--text-placeholder);
   padding: 1rem 0;
   font-size: 0.95rem;
 }
@@ -100,19 +128,19 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--border-item);
   border-radius: 8px;
-  background: #fafafa;
+  background: var(--bg-item);
   transition: background 0.15s;
 }
 
 .task-item:hover {
-  background: #f4f4ff;
+  background: var(--bg-item-hover);
 }
 
 .task-item.done .task-text {
   text-decoration: line-through;
-  color: #aaa;
+  color: var(--text-placeholder);
 }
 
 .task-checkbox {
@@ -126,14 +154,14 @@
 .task-text {
   flex: 1;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-secondary);
   word-break: break-word;
 }
 
 .delete-btn {
   background: none;
   border: none;
-  color: #ccc;
+  color: var(--text-placeholder);
   font-size: 1rem;
   cursor: pointer;
   padding: 0.2rem 0.4rem;
@@ -150,5 +178,5 @@
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #888;
+  color: var(--text-muted);
 }
