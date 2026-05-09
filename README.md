@@ -8,6 +8,7 @@ Aplicativo de lista de tarefas desenvolvido com React + Vite.
 - Marcar tarefas como concluídas
 - Deletar tarefas
 - Filtrar por: Todas, Ativas e Concluídas
+- Reordenar tarefas via drag and drop
 - Modo claro/escuro (segue a preferência do sistema automaticamente)
 
 ## Tecnologias
