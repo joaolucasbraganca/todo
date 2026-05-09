@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 const FILTERS = ['Todas', 'Ativas', 'Concluídas']
@@ -8,6 +8,9 @@ export default function App() {
   const [input, setInput] = useState('')
   const [filter, setFilter] = useState('Todas')
   const [dark, setDark] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const [draggingIdx, setDraggingIdx] = useState(null)
+  const [dragOverIdx, setDragOverIdx] = useState(null)
+  const dragIndex = useRef(null)
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
@@ -30,6 +33,18 @@ export default function App() {
 
   function handleKeyDown(e) {
     if (e.key === 'Enter') addTask()
+  }
+
+  function reorderTasks(fromIdx, toIdx) {
+    if (fromIdx === toIdx) return
+    const draggedTask = filtered[fromIdx]
+    const targetTask = filtered[toIdx]
+    const newTasks = [...tasks]
+    const from = newTasks.findIndex(t => t.id === draggedTask.id)
+    const to = newTasks.findIndex(t => t.id === targetTask.id)
+    newTasks.splice(from, 1)
+    newTasks.splice(to, 0, draggedTask)
+    setTasks(newTasks)
   }
 
   const filtered = tasks.filter(t => {
@@ -77,8 +92,17 @@ export default function App() {
         {filtered.length === 0 && (
           <li className="empty">Nenhuma tarefa aqui.</li>
         )}
-        {filtered.map(task => (
-          <li key={task.id} className={`task-item ${task.done ? 'done' : ''}`}>
+        {filtered.map((task, index) => (
+          <li
+            key={task.id}
+            className={`task-item ${task.done ? 'done' : ''} ${draggingIdx === index ? 'dragging' : ''} ${dragOverIdx === index && draggingIdx !== index ? 'drag-over' : ''}`}
+            draggable
+            onDragStart={() => { dragIndex.current = index; setDraggingIdx(index) }}
+            onDragOver={e => { e.preventDefault(); setDragOverIdx(index) }}
+            onDrop={() => { reorderTasks(dragIndex.current, index); setDraggingIdx(null); setDragOverIdx(null) }}
+            onDragEnd={() => { dragIndex.current = null; setDraggingIdx(null); setDragOverIdx(null) }}
+          >
+            <span className="drag-handle">⠿</span>
             <input
               type="checkbox"
               checked={task.done}

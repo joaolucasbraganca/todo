@@ -131,11 +131,30 @@
   border: 1px solid var(--border-item);
   border-radius: 8px;
   background: var(--bg-item);
-  transition: background 0.15s;
+  transition: background 0.15s, opacity 0.15s, border-color 0.15s;
+  cursor: grab;
 }
 
 .task-item:hover {
   background: var(--bg-item-hover);
+}
+
+.task-item.dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+}
+
+.task-item.drag-over {
+  border-color: #6366f1;
+  background: var(--bg-item-hover);
+}
+
+.drag-handle {
+  color: var(--text-placeholder);
+  font-size: 1.1rem;
+  cursor: grab;
+  flex-shrink: 0;
+  user-select: none;
 }
 
 .task-item.done .task-text {
